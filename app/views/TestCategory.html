@@ -1,0 +1,54 @@
+<section class="content-header">
+    <h1>
+        Assign Test Categories to Subject
+    </h1>
+    <button class="btn btn-flat btn-primary pull-right" ng-click="addCategories()">
+        <i class="fa fa-plus"></i>&nbsp;Add Categories
+    </button>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="form-group">
+        <ui-select ng-model="assignCategories.CourseId" ng-required="true" ng-change="courseSelected()">
+            <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                <div ng-bind-html="course.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="assignCategories.BranchId" ng-required="true" ng-change="branchSelected()">
+            <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                <div ng-bind-html="branch.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="assignCategories.SemesterId" ng-required="true" ng-change="semesterSelected()">
+            <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+            <ui-select-choices repeat="semester.Id as semester in semesters | filter: $select.search">
+                <div ng-bind-html="semester.SemesterNumber"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="assignCategories.SubjectId" ng-required="true">
+            <ui-select-match placeholder="Choose a Subject">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="subject.Id as subject in subjects | filter: $select.search">
+                <div ng-bind-html="subject.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+
+    <button class="btn btn-primary btn-block" ng-click="assign()">Assign</button>
+
+    <div class="form-group">
+        Choose categories to assign :
+        <div class="checkbox" ng-repeat="category in categories | orderBy: '-CreatedAt'">
+            <label>
+                <input type="checkbox" ng-model="category.isChecked"> {{$index+1}} - {{category.Name}}
+            </label>
+        </div>
+    </div>
+
+</section>

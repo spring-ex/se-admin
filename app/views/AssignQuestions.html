@@ -1,0 +1,178 @@
+<section class="content-header">
+    <h1>
+        Assign Questions
+        <a class="pull-right" href="https://drive.google.com/file/d/1JBmi5WSWg-sHJ-u3R91znEN36NhejiTl/view?usp=drivesdk" target="_blank" style="margin-right:15px;">TIPS</a>
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-2">
+            <ui-select ng-model="selected.courseId" ng-required="true" style="margin-bottom:10px;" ng-change="getBranchesForCourse(selected.courseId)">
+                <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                    <div ng-bind-html="course.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-md-2">
+            <ui-select ng-model="selected.branchId" ng-required="true" style="margin-bottom:10px;" ng-change="getSemestersForBranch(selected.branchId)">
+                <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                    <div ng-bind-html="branch.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-md-2">
+            <ui-select ng-model="selected.semesterId" ng-required="true" style="margin-bottom:10px;" ng-change="getSubjectsForSemester(selected.semesterId)">
+                <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+                <ui-select-choices repeat="sem.Id as sem in semesters | filter: $select.search">
+                    <div ng-bind-html="sem.SemesterNumber"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-md-2">
+            <ui-select ng-model="selected.SubjectId" ng-required="true" style="margin-bottom:10px;" ng-change="getAllChaptersForSubject(selected.SubjectId)">
+                <ui-select-match placeholder="Choose a Subject">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="subject.Id as subject in subjects | filter: $select.search">
+                    <div ng-bind-html="subject.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-md-2">
+            <ui-select ng-model="selected.ChapterId" ng-required="true" style="margin-bottom:10px;" ng-change="getAllQuestionsForChapter(selected.ChapterId)">
+                <ui-select-match placeholder="Choose a Chapter">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="chapter.Id as chapter in chapters | filter: $select.search">
+                    <div ng-bind-html="chapter.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6" ng-if="questions.length == 0">
+            No Questions Found
+        </div>
+        <div class="col-md-4" style="border-right:1px solid #222d32;max-height: 545px;overflow-y: scroll;" ng-if="questions.length > 0">
+            <h3>All Questions({{questions.length}})</h3>
+            <ol>
+                <li ng-repeat="que in questions" style="margin:10px;" ng-class="{'question-selected':que.Id == question.Id, 'question-border':(que.Tags == 'null' || que.Tags == null)}">
+                    <div ng-click="questionSelected($index)" style="cursor: pointer;">
+                        <div ng-bind-html="que.QuestionText" ng-if="que.QuestionText != null"></div>
+                        <img ng-if="que.QuestionMediaURL != null" ng-src="{{que.QuestionMediaURL}}" alt="" style="width:90%;">
+                    </div>
+                    <button class="btn btn-danger" ng-click="removeQuestionImage(que)" ng-if="que.QuestionMediaURL != null">Delete Image</button>
+                </li>
+            </ol>
+        </div>
+        <div class="col-md-8" ng-if="questions.length > 0">
+            <div class="question">
+                <h4>
+                    <i class="fa fa-chevron-left" ng-click="previousQuestion()"></i> &nbsp;&nbsp;Question {{currentIndex + 1}}&nbsp;&nbsp;
+                    <i class="fa fa-chevron-right" ng-click="nextQuestion()"></i>
+                </h4>
+                <a href="{{question.QuestionMediaURL}}" target="_blank" ng-if="question.QuestionMediaURL != null">View Question</a>
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col-md-12">
+                        <!-- <span editable-text="question.QuestionText" onaftersave="updateQuestion()">{{question.QuestionText || 'null'}}</span> -->
+                        <a href editable-textarea="question.QuestionText" onaftersave="updateQuestion()" e-rows="4" e-cols="100">
+                            {{ question.QuestionText || 'null' }}
+                        </a>
+                    </div>
+                </div>
+                <!-- <img ng-if="question.QuestionMediaURL != null" ng-src="{{question.QuestionMediaURL}}" alt="No Media" style="width:30%;"> -->
+            </div>
+            <div class="row" style="margin-top:15px; margin-bottom: 15px;">
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="question.IncludeInSmartLearning" ng-change="updateQuestion()">
+                            Include in smart learning
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            Time to solve : <span editable-number="question.TimeToSolveInSeconds" onaftersave="timeChanged()">{{question.TimeToSolveInSeconds || 'null'}}</span>
+                        </div>
+                    </div>
+                    <h3>Options</h3>
+                    <ol>
+                        <li ng-repeat="option in question.Options">
+                            <span editable-text="option.OptionText" onaftersave="optionChanged(option)">{{option.OptionText || 'null'}}</span> - <span editable-number="option.OptionValue" onaftersave="optionChanged(option)">{{option.OptionValue}}</span>
+                        </li>
+                    </ol>
+                    <ol>
+                        <li ng-repeat="option in question.Options">
+                            <div ng-bind-html="option.OptionText"></div>
+                        </li>
+                    </ol>
+                    <h3>Choose the topic</h3>
+                    <ui-select ng-model="question.TopicId" ng-required="true" style="margin-bottom:10px;" ng-change="assign()">
+                        <ui-select-match placeholder="Choose a Topic">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="topic.Id as topic in topics | filter: $select.search">
+                            <div ng-bind-html="topic.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Standard</h6>
+                                    <label ng-repeat="std in standard" style="margin-right:15px;">
+                                        <input  type="checkbox" ng-model="std.isSelected" ng-change="addToTags(std)"> {{std.Name}}
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Difficulty Level</h6>
+                                    <label ng-repeat="dl in difficultyLevel" style="margin-right:15px;">
+                                        <input  type="checkbox" ng-model="dl.isSelected" ng-change="addToTags(dl)"> {{dl.Name}}
+                                    </label>
+                                </div>
+                            </div>
+                            <h6>Answer Type</h6>
+                            <label ng-repeat="at in answerTypes" style="margin-right:15px;">
+                                <input  type="checkbox" ng-model="at.isSelected" ng-change="addToTags(at)"> {{at.Name}}
+                            </label>
+                            <h6>Maths Core</h6>
+                            <label ng-repeat="mc in mathsCore" style="margin-right:15px;">
+                                    <input  type="checkbox" ng-model="mc.isSelected" ng-change="addToTags(mc)"> {{mc.Name}}
+                                </label>
+                            <h6>Science Core</h6>
+                            <label ng-repeat="sc in scienceCore" style="margin-right:15px;">
+                                    <input  type="checkbox" ng-model="sc.isSelected" ng-change="addToTags(sc)"> {{sc.Name}}
+                                </label>
+                            <h6>Blooms Taxonomy</h6>
+                            <label ng-repeat="btm in btms" style="margin-right:15px;">
+                                <input  type="checkbox" ng-model="btm.isSelected" ng-change="addToTags(btm)"> {{btm.Name}}
+                            </label>
+                            <h6>Others</h6>
+                            <label ng-repeat="other in others" style="margin-right:15px;">
+                                <input  type="checkbox" ng-model="other.isSelected" ng-change="addToTags(other)"> {{other.Name}}
+                            </label>
+                            <textarea class="form-control" cols="30" rows="2" ng-model="selected.tagsToShow" placeholder="Skill (comma separated)"></textarea>
+                            <a href editable-textarea="question.Solution" onaftersave="updateQuestion()" e-rows="4" e-cols="60" style="margin-top:15px;">
+                                {{ question.Solution || 'null' }}
+                            </a>
+                            <div style="margin-top:10px;" ng-bind-html="question.Solution"></div>
+                            <textarea class="form-control" cols="30" rows="2" ng-model="question.Notes" placeholder="Notes" style="margin-top:15px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <button ng-hide="currentIndex == 0" class="btn btn-primary btn-block" ng-click="previousQuestion()">Previous</button>
+                </div>
+                <div class="col-xs-3">
+                    <button ng-hide="currentIndex == questions.length-1" class="btn btn-primary btn-block" ng-click="nextQuestion()">Next</button>
+                </div>
+                <div class="col-xs-3">
+                    <button class="btn btn-primary btn-block" ng-click="updateTags(question)">Update Tags</button>
+                </div>
+                <div class="col-xs-3">
+                    <button class="btn btn-danger btn-block" ng-click="deleteQuestion()">Delete Question</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

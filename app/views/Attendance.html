@@ -1,0 +1,97 @@
+<section class="content-header">
+    <h1>
+        Attendance
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <button class="btn btn-primary" ng-click="exportToXLS()" style="float:right; margin-bottom:10px;" ng-show="attendance.Students.length > 0">
+        Download
+    </button>
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <ui-select class="text-properties" ng-model="selected.CourseId" ng-required="true" ng-change="courseSelected(selected.CourseId)">
+                                <ui-select-match placeholder="Choose a {{keywords.CourseKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                                    <div ng-bind-html="course.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <ui-select class="text-properties" ng-model="selected.BranchId" ng-required="true" ng-change="branchSelected(selected.BranchId)">
+                                <ui-select-match placeholder="Choose a {{keywords.BranchKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                                    <div ng-bind-html="branch.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <ui-select class="text-properties" ng-model="selected.SemesterId" ng-required="true" ng-change="semesterSelected(selected.SemesterId)">
+                                <ui-select-match placeholder="Choose a {{keywords.SemesterKeyword}}">{{$select.selected.SemesterNumber}}</ui-select-match>
+                                <ui-select-choices repeat="sem.Id as sem in semesters | filter: $select.search">
+                                    <div ng-bind-html="sem.SemesterNumber"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <ui-select class="text-properties" ng-model="selected.ClassId" ng-required="true" ng-change="classSelected(selected.ClassId)">
+                                <ui-select-match placeholder="Choose a {{keywords.ClassKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="class.Id as class in classes | filter: $select.search">
+                                    <div ng-bind-html="class.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <ui-select class="text-properties" ng-model="selected.Subject" ng-required="true">
+                                <ui-select-match placeholder="Choose a {{keywords.SubjectKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="subject in subjects | filter: $select.search">
+                                    <div ng-bind-html="subject.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" ng-click="checkAttendance()">
+                            Check Attendance
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="attendance-list" style="overflow: auto;">
+                <div class="attendance-list">
+                    <table class="table table-bordered edit-tables" ng-show="attendance.Students.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Attendance</th>
+                                <th>Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="student in attendance.Students">
+                                <td>{{student.Name}}</td>
+                                <td class="text-center">{{student.TotalPresent}}/{{attendance.TotalClasses}}</td>
+                                <td class="text-center" ng-class="{'google-green':(student.TotalPresent / attendance.TotalClasses)>=0.75, 'google-yellow' :((student.TotalPresent / attendance.TotalClasses)<0.75 && (student.TotalPresent / attendance.TotalClasses)>=0.5), 'google-red': (student.TotalPresent / attendance.TotalClasses)<0.5}">{{(student.TotalPresent/attendance.TotalClasses)*100 | number:1}}%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

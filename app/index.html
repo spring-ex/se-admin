@@ -1,0 +1,165 @@
+<!doctype html>
+<html style="height: auto;">
+
+<head>
+    <meta charset="utf-8">
+    <title>Spring ESR</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+    <link rel="stylesheet" href="bower_components/angular-wizard/dist/angular-wizard.min.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/custom.css">
+    <link rel="stylesheet" href="styles/AdminLTE.min.css">
+    <link rel="stylesheet" href="styles/skin-blue.min.css">
+    <!-- endbuild -->
+
+    <!-- high charts -->
+    <script src="http://code.highcharts.com/highcharts.src.js"></script>
+</head>
+
+<body ng-app="smartAdminApp" class="skin-blue sidebar-mini wysihtml5-supported" ng-controller="MainController" style="height: auto;">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+
+    <div ng-include="'templates/Header.html'" class="main-header" ng-if="checkHeaderAndSideNav()"></div>
+
+    <aside ng-include="'templates/Sidemenu.html'" class="main-sidebar" ng-if="checkHeaderAndSideNav()"></aside>
+
+    <div ng-class="{'wrapper' : checkHeaderAndSideNav()}">
+        <div ui-view="" ng-class="{'content-wrapper' : checkHeaderAndSideNav()}"></div>
+    </div>
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <!--<script>
+       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>-->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/angular-wizard/dist/angular-wizard.min.js"></script>
+    <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
+    <script src="bower_components/angular-svg-round-progressbar/build/roundProgress.js"></script>
+    <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
+    <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/MainController.js"></script>
+    <script src="scripts/controllers/SignInController.js"></script>
+    <script src="scripts/controllers/DashboardController.js"></script>
+    <script src="scripts/controllers/UsersController.js"></script>
+    <script src="scripts/controllers/AddOrEditUserController.js"></script>
+    <script src="scripts/controllers/AddOrEditStudentController.js"></script>
+    <script src="scripts/controllers/StudentsController.js"></script>
+    <script src="scripts/controllers/EnquiriesController.js"></script>
+    <script src="scripts/controllers/AddEnquiryController.js"></script>
+    <script src="scripts/controllers/ViewUserController.js"></script>
+    <script src="scripts/controllers/ViewStudentController.js"></script>
+    <script src="scripts/controllers/AttendanceController.js"></script>
+    <script src="scripts/controllers/DeleteAttendanceController.js"></script>
+    <script src="scripts/controllers/AddCollegeController.js"></script>
+    <script src="scripts/controllers/CoursesController.js"></script>
+    <script src="scripts/controllers/BranchesController.js"></script>
+    <script src="scripts/controllers/AssignSemestersController.js"></script>
+    <script src="scripts/controllers/AddClassController.js"></script>
+    <script src="scripts/controllers/SubjectsController.js"></script>
+    <script src="scripts/controllers/ExpensesController.js"></script>
+    <script src="scripts/controllers/FeesCollectedController.js"></script>
+    <script src="scripts/controllers/ChaptersController.js"></script>
+    <script src="scripts/controllers/TopicsController.js"></script>
+    <script src="scripts/controllers/TopicVideosController.js"></script>
+    <script src="scripts/controllers/ActivateStudentsController.js"></script>
+    <script src="scripts/controllers/TestCategoryController.js"></script>
+    <script src="scripts/controllers/QuestionsController.js"></script>
+    <script src="scripts/controllers/AssignQuestionsController.js"></script>
+    <script src="scripts/controllers/AssignPPTController.js"></script>
+    <script src="scripts/controllers/CopyTopicsController.js"></script>
+    <script src="scripts/controllers/TopicQPController.js"></script>
+    <script src="scripts/controllers/AssignStudentsController.js"></script>
+    <script src="scripts/controllers/TreeViewController.js"></script>
+    <script src="scripts/controllers/SpecialSubjectsController.js"></script>
+    <script src="scripts/controllers/LinkSpecialSubjectsController.js"></script>
+    <script src="scripts/controllers/SpecialClassController.js"></script>
+    <script src="scripts/controllers/CreateSmartTestController.js"></script>
+    <script src="scripts/controllers/AssignDefaultPPTController.js"></script>
+    <script src="scripts/controllers/TakeAttendanceController.js"></script>
+    <script src="scripts/controllers/DeleteSmartTestController.js"></script>
+    <script src="scripts/controllers/ProgramOutcomesController.js"></script>
+    <script src="scripts/controllers/CourseOutcomesController.js"></script>
+    <script src="scripts/controllers/AssignStudentsToElectivesController.js"></script>
+    <script src="scripts/controllers/CreateCriteriaController.js"></script>
+    <script src="scripts/controllers/ViewCriteriaController.js"></script>
+    <script src="scripts/controllers/SearchwordController.js"></script>
+    <script src="scripts/controllers/AddDocumentsToCollegeController.js"></script>
+    <script src="scripts/factories/SignInFactory.js"></script>
+    <script src="scripts/factories/UsersFactory.js"></script>
+    <script src="scripts/factories/RoleFactory.js"></script>
+    <script src="scripts/factories/StudentsFactory.js"></script>
+    <script src="scripts/factories/LookUpFactory.js"></script>
+    <script src="scripts/factories/EnquiriesFactory.js"></script>
+    <script src="scripts/factories/SuperUserFactory.js"></script>
+    <script src="scripts/factories/ExpensesFactory.js"></script>
+    <script src="scripts/factories/AttendanceFactory.js"></script>
+    <script src="scripts/factories/DashboardFactory.js"></script>
+    <script src="scripts/factories/AssignPPTFactory.js"></script>
+    <script src="scripts/factories/CriteriaFactory.js"></script>
+    <script src="scripts/factories/AddDocumentsToCollegeFactory.js"></script>
+    <script src="scripts/theme_scripts/app.min.js"></script>
+    <!-- endbuild -->
+
+
+    <!--<script src="http://code.highcharts.com/modules/exporting.js"></script>-->
+    <script src="//widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+</body>
+
+</html>

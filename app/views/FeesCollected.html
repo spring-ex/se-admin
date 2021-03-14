@@ -1,0 +1,87 @@
+<section class="content-header">
+    <h1>
+        Fees Collected
+        <span class="pull-right">Total : {{totalFees}}</span>
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row" style="margin-bottom:10px;">
+        <div class="col-md-12">
+            <button class="btn btn-primary" ng-click="exportToXLS()" ng-show="feesCollected.length > 0">
+                Download
+            </button>
+            <div class="input-group input-group-sm pull-right" style="width: 300px;">
+                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search" ng-model="search.text" ng-change="searchStudent()">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <ui-select ng-model="selected.CourseId" ng-required="true" ng-change="courseSelected(selected.CourseId)">
+                    <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                        <div ng-bind-html="course.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <ui-select ng-model="selected.BranchId" ng-required="true" ng-change="branchSelected(selected.BranchId)">
+                    <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                        <div ng-bind-html="branch.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <ui-select ng-model="selected.SemesterId" ng-required="true" ng-change="semesterSelected(selected.SemesterId)">
+                    <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+                    <ui-select-choices repeat="semester.Id as semester in semesters | filter: $select.search">
+                        <div ng-bind-html="semester.SemesterNumber"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <ui-select ng-model="selected.ClassId" ng-required="true" ng-change="classSelected(selected.ClassId)">
+                    <ui-select-match placeholder="Choose a Batch/Class">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="class.Id as class in classes | filter: $select.search">
+                        <div ng-bind-html="class.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="fees-list">
+            <table class="table table-bordered edit-tables" ng-show="feesCollected.length > 0">
+                <thead>
+                    <tr>
+                        <th>Sl No.</th>
+                        <th>Student Name</th>
+                        <th>Amount</th>
+                        <th>Payment Mode</th>
+                        <th>Cheque Details</th>
+                        <th>Payment Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="fc in feesCollected">
+                        <td>{{$index+1}}</td>
+                        <td>{{fc.Name}}</td>
+                        <td>{{fc.FeesPaid}}</td>
+                        <td>{{fc.PaymentMode}}</td>
+                        <td>{{fc.PaymentModeNumber}}</td>
+                        <td>{{fc.PaymentDate | date: 'dd/MM/yyyy'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+</section>

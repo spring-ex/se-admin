@@ -1,0 +1,156 @@
+<section class="content-header">
+    <h1>
+        Test Questions
+        <a class="pull-right" href="https://drive.google.com/file/d/1JBmi5WSWg-sHJ-u3R91znEN36NhejiTl/view?usp=drivesdk" target="_blank" style="margin-right:15px;">TIPS</a>
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <ui-select ng-model="selected.CourseId" ng-required="true" ng-change="courseSelected()">
+                    <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                        <div ng-bind-html="course.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <ui-select ng-model="selected.BranchId" ng-required="true" ng-change="branchSelected()">
+                    <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                        <div ng-bind-html="branch.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <ui-select ng-model="selected.SemesterId" ng-required="true" ng-change="semesterSelected()">
+                    <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+                    <ui-select-choices repeat="semester.Id as semester in semesters | filter: $select.search">
+                        <div ng-bind-html="semester.SemesterNumber"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <ui-select ng-model="selected.SubjectId" ng-required="true" ng-change="subjectSelected()">
+                    <ui-select-match placeholder="Choose a Subject">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="subject.Id as subject in subjects | filter: $select.search">
+                        <div ng-bind-html="subject.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <ui-select ng-model="selected.Chapter" ng-required="true" ng-change="chapterSelected()">
+                    <ui-select-match placeholder="Choose a Chapter">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="chapter as chapter in chapters | filter: $select.search">
+                        <div ng-bind-html="chapter.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="form-group">
+                    <ui-select ng-model="selected.QuestionForm" ng-required="true">
+                        <ui-select-match placeholder="Choose a Question Form">{{$select.selected.Form}}</ui-select-match>
+                        <ui-select-choices repeat="que.Form as que in questionForms | filter: $select.search">
+                            <div ng-bind-html="que.Form"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="row" style="margin-bottom:10px;" ng-show="selected.QuestionForm == 'TEXT'">
+                    <div class="col-md-12">
+                        <textarea class="form-control" cols="30" rows="4" ng-model="newCriteria.Name" placeholder="Question text"></textarea>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:10px;" ng-show="selected.QuestionForm == 'IMAGE'">
+                    <div class="col-md-12" style="margin-bottom:10px;">
+                        <button class="btn btn-primary" ng-click="openQuestionUploader()" style="margin-bottom:15px;">Upload Question</button>
+                        <div class="input-group" style="width:100%;">
+                            <input type="text" style="width:100%;" class="form-control" placeholder="Media URL" ng-model="newCriteria.ImageURL">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Standard</h6>
+                        <label ng-repeat="std in standard" style="margin-right:15px;">
+                            <input  type="checkbox" ng-model="std.isSelected" ng-change="addToTags(std)"> {{std.Name}}
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Difficulty Level</h6>
+                        <label ng-repeat="dl in difficultyLevel" style="margin-right:15px;">
+                            <input  type="checkbox" ng-model="dl.isSelected" ng-change="addToTags(dl)"> {{dl.Name}}
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Answer Length</h6>
+                        <label ng-repeat="al in answerLengths" style="margin-right:15px;">
+                            <input  type="checkbox" ng-model="al.isSelected" ng-change="addToTags(al)"> {{al.Name}}
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Answer Type</h6>
+                        <label ng-repeat="at in answerTypes" style="margin-right:15px;">
+                            <input  type="checkbox" ng-model="at.isSelected" ng-change="addToTags(at)"> {{at.Name}}
+                        </label>
+                    </div>
+                </div>
+                <h6>Maths Core</h6>
+                <label ng-repeat="mc in mathsCore" style="margin-right:15px;">
+                    <input  type="checkbox" ng-model="mc.isSelected" ng-change="addToTags(mc)"> {{mc.Name}}
+                </label>
+                <h6>Science Core</h6>
+                <label ng-repeat="sc in scienceCore" style="margin-right:15px;">
+                    <input  type="checkbox" ng-model="sc.isSelected" ng-change="addToTags(sc)"> {{sc.Name}}
+                </label>
+                <h6>Blooms Taxonomy</h6>
+                <label ng-repeat="btm in btms" style="margin-right:15px;">
+                    <input  type="checkbox" ng-model="btm.isSelected" ng-change="addToTags(btm)"> {{btm.Name}}
+                </label>
+                <h6>Others</h6>
+                <label ng-repeat="other in others" style="margin-right:15px;">
+                    <input  type="checkbox" ng-model="other.isSelected" ng-change="addToTags(other)"> {{other.Name}}
+                </label>
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col-md-12">
+                        <textarea class="form-control" cols="30" rows="4" ng-model="newCriteria.Tags" placeholder="Tags Ex:Logical Reasoning,Analytical Thinking"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <ui-select ng-model="newCriteria.BTId" ng-required="true">
+                    <ui-select-match placeholder="Choose a Blooms Level">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="bt.Id as bt in bts | filter: $select.search">
+                        <div ng-bind-html="bt.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <h4 ng-show="topics.length > 0">Select Topics</h4>
+            <div ng-repeat="topic in topics">
+                <label>
+                    <input  type="checkbox" ng-model="topic.isChecked" > {{topic.Name}}
+                </label>
+            </div>
+
+            <button class="btn btn-primary btn-block" ng-click="addQuestion()">
+                Add Question
+            </button>
+        </div>
+    </div>
+</section>

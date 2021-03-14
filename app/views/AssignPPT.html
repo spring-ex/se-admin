@@ -1,0 +1,41 @@
+<section class="content-header">
+    <h1>
+        Assign PPT
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-6" ng-if="topics.length == 0">
+            No Topics Found
+        </div>
+        <div class="col-md-8" ng-if="topics.length > 0">
+            <div class="row" ng-repeat="topic in topics">
+                <div class="col-md-4" style="line-height:34px;">
+                    {{topic.Name}}
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" name="topic-video-url" placeholder="Paste URL here" ng-model="topic.MediaURL">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-sm btn-primary" ng-click="assignPPT(topic)">
+                        Assign PPT
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <ui-select ng-model="selected.subjectId" ng-required="true" style="margin-bottom:10px;" ng-change="getAllChaptersForSubject(selected.subjectId)">
+                <ui-select-match placeholder="Choose a Subject">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="subject.Id as subject in subjects | filter: $select.search">
+                    <div ng-bind-html="subject.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+            <ui-select ng-model="selected.chapterId" ng-required="true" style="margin-bottom:10px;" ng-change="getAllTopicsForChapter(selected.chapterId)">
+                <ui-select-match placeholder="Choose a Chapter">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="chapter.Id as chapter in chapters | filter: $select.search">
+                    <div ng-bind-html="chapter.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+</section>

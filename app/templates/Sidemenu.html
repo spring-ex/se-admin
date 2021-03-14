@@ -1,0 +1,311 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel" style="overflow:visible;">
+        <div class="pull-left image">
+            <img src="images/man.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="dropdown" ng-if="loggedInUser.Role == 'ADMIN'">
+            <a class="pull-left info dropdown-toggle" data-toggle="dropdown" style="width: 160px; cursor:pointer;">
+                <p style="margin:10px 5px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">{{loggedInUser.CollegeName}}&nbsp;<span class="caret"></span></p>
+                <ul class="dropdown-menu" style="margin-top:30px;">
+                    <li><a href ng-repeat="user in loggedInUsers" ng-click="changeCollege(user)">{{user.CollegeName}}</a></li>
+                </ul>
+            </a>
+        </div>
+        <div class="pull-left info" ng-if="loggedInUser.Role == 'FACULTY' || loggedInUser.Role == 'STAFF' || loggedInUser.Role == 'SUPERADMIN' || loggedInUser.Role == 'UPLOADER'">
+            <p>{{loggedInUser.Name}}</p>
+        </div>
+    </div>
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+        <li ng-class="{'active' : loggedInUser.Role == 'ADMIN' || loggedInUser.Role == 'FACULTY'}" ng-if="loggedInUser.Role == 'ADMIN' || loggedInUser.Role == 'FACULTY'">
+            <a href="#!/Dashboard">
+                <i class="fa fa-dashboard"></i><span>Dashboard</span>
+            </a>
+        </li>
+        <li ng-if="loggedInUser.Role == 'ADMIN' || loggedInUser.Role == 'SUPERADMIN'">
+            <a href="#!/Users">
+                <i class="fa fa-users"></i>
+                <span>Users</span>
+            </a>
+        </li>
+        <li ng-if="(loggedInUser.Role == 'ADMIN' || loggedInUser.Role == 'STAFF') && (loggedInUser.PackageCode == 'EXTENDED' || loggedInUser.PackageCode == 'LM')">
+            <a href="#!/Enquiries">
+                <i class="fa fa-address-card"></i>
+                <span>Enquiries</span>
+            </a>
+        </li>
+        <li ng-class="{'active' : loggedInUser.Role == 'STAFF'}" ng-if="loggedInUser.Role == 'ADMIN' || loggedInUser.Role == 'STAFF'">
+            <a href="#!/AddOrEditStudent/1/null">
+                <i class="fa fa-graduation-cap"></i>
+                <span>Admissions</span>
+            </a>
+        </li>
+        <li ng-if="loggedInUser.Role == 'ADMIN' || loggedInUser.Role == 'STAFF'">
+            <a href="#!/Students/0">
+                <i class="fa fa-users"></i>
+                <span>Students</span>
+            </a>
+        </li>
+        <li ng-if="loggedInUser.Role == 'ADMIN' || loggedInUser.Role == 'STAFF'">
+            <a href="#!/ActivateStudents">
+                <i class="fa fa-check"></i>
+                <span>Activate Students</span>
+            </a>
+        </li>
+        <!-- <li ng-if="loggedInUser.Role == 'ADMIN'">
+            <a href=" #!/ProgramOutcome ">
+                <i class="fa fa-tasks "></i>
+                <span>Program Outcome</span>
+            </a>
+        </li>
+        <li ng-if="loggedInUser.Role == 'FACULTY' || loggedInUser.Role == 'ADMIN'">
+            <a href=" #!/CourseOutcome">
+                <i class="fa fa-tasks "></i>
+                <span>Course Outcome</span>
+            </a>
+        </li> -->
+        <li class="treeview " ng-if="loggedInUser.Role=='ADMIN' || loggedInUser.Role=='FACULTY' ">
+            <a href>
+                <i class="fa fa-th-list "></i> <span>Attendance</span>
+                <span class="pull-right-container ">
+                    <i class="fa fa-angle-left pull-right "></i>
+                </span>
+            </a>
+            <ul class="treeview-menu ">
+                <li>
+                    <a href="#!/Attendance ">
+                        <i class="fa fa-th-list "></i>
+                        <span>View Attendance</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='FACULTY' && loggedInUser.PackageCode=='BASIC' ">
+                    <a href="#!/TakeAttendance ">
+                        <i class="fa fa-tasks "></i>
+                        <span>Take Attendance</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='ADMIN' ">
+                    <a href="#!/DeleteAttendance ">
+                        <i class="fa fa-tasks "></i>
+                        <span>Manage Attendance</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li ng-class="{ 'active' : loggedInUser.Role=='SUPERADMIN' } " ng-if="loggedInUser.Role=='SUPERADMIN' ">
+            <a href="#!/AddCollege ">
+                <i class="fa fa-university "></i>
+                <span>Add College</span>
+            </a>
+        </li>
+        <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+            <a href="#!/CollegeDocuments ">
+                <i class="fa fa-list-ol "></i>
+                <span>College Documents</span>
+            </a>
+        </li>
+        <li ng-if="(loggedInUser.Role=='ADMIN' || loggedInUser.Role=='FACULTY' ) && loggedInUser.PackageCode=='SMART' ">
+            <a href="#!/AssignPPT ">
+                <i class="fa fa-link "></i>
+                <span>Assign PPT</span>
+            </a>
+        </li>
+        <li class="treeview " ng-if="loggedInUser.Role=='SUPERADMIN' ">
+            <a href>
+                <i class="fa fa-list-ol "></i> <span>Entities</span>
+                <span class="pull-right-container ">
+                        <i class="fa fa-angle-left pull-right "></i>
+                    </span>
+            </a>
+            <ul class="treeview-menu ">
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/Courses ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Courses</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/Branches ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Branches</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/AssignSemesters ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Semesters</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/Subjects ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Subjects</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/TestCategory ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Test Category</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+            <a href="#!/AddClass ">
+                <i class="fa fa-list-ol "></i>
+                <span>Add Class</span>
+            </a>
+        </li>
+        <li class="treeview " ng-if="loggedInUser.Role=='SUPERADMIN' ">
+            <a href>
+                <i class="fa fa-list-ol "></i> <span>Electives</span>
+                <span class="pull-right-container ">
+                    <i class="fa fa-angle-left pull-right "></i>
+                </span>
+            </a>
+            <ul class="treeview-menu ">
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/SpecialSubjects ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Special Subjects</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/LinkSpecialSubjects ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Link Special Subjects</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/SpecialClass ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Special Class</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="treeview " ng-if="loggedInUser.Role=='SUPERADMIN' || loggedInUser.Role=='UPLOADER' ">
+            <a href>
+                <i class="fa fa-list-ol "></i> <span>Chapter & Topics</span>
+                <span class="pull-right-container ">
+                    <i class="fa fa-angle-left pull-right "></i>
+                </span>
+            </a>
+            <ul class="treeview-menu ">
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/Chapters ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Chapters</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/Topics ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Topics</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/CopyTopics ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Copy Topics</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/TopicVideos ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Topic Videos</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' || loggedInUser.Role=='UPLOADER' ">
+                    <a href="#!/AssignDefaultPPT ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Assign Default PPT</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+                    <a href="#!/TopicQP ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Topic Question Papers</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' || loggedInUser.Role=='UPLOADER' ">
+                    <a href="#!/ViewCriteria ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>View Test Questions</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' || loggedInUser.Role=='UPLOADER' ">
+                    <a href="#!/CreateCriteria ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Upload Test Questions</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' || loggedInUser.Role=='UPLOADER' ">
+                    <a href="#!/Questions ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Upload MCQ's</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' || loggedInUser.Role=='UPLOADER' ">
+                    <a href="#!/AssignQuestions ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Assign MCQ's</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' || loggedInUser.Role=='UPLOADER' ">
+                    <a href="#!/CreateSmartTest ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Create Quiz</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' || loggedInUser.Role=='UPLOADER' ">
+                    <a href="#!/DeleteSmartTest ">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Delete Quiz</span>
+                    </a>
+                </li>
+                <li ng-if="loggedInUser.Role=='SUPERADMIN' || loggedInUser.Role=='UPLOADER' ">
+                    <a href="#!/Searchword">
+                        <i class="fa fa-list-ol "></i>
+                        <span>Keywords</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li ng-if="loggedInUser.Role=='ADMIN' ">
+            <a href="#!/AssignStudents ">
+                <i class="fa fa-list-ol "></i>
+                <span>Assign Students</span>
+            </a>
+        </li>
+        <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
+            <a href="#!/TreeView ">
+                <i class="fa fa-list-ol "></i>
+                <span>Tree View</span>
+            </a>
+        </li>
+        <li ng-if="(loggedInUser.Role=='ADMIN' || loggedInUser.Role=='STAFF' ) && (loggedInUser.PackageCode=='EXTENDED' || loggedInUser.PackageCode=='LM' ) ">
+            <a href="#!/Expenses ">
+                <i class="fa fa-inr "></i>
+                <span>Expenses</span>
+            </a>
+        </li>
+        <li ng-if="loggedInUser.Role=='ADMIN' && (loggedInUser.PackageCode=='EXTENDED' || loggedInUser.PackageCode=='LM' ) ">
+            <a href="#!/FeesCollected ">
+                <i class="fa fa-money "></i>
+                <span>Fees Collected</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<script>
+    $(document).ready(function() {
+        $(".sidebar-menu a ").on("click ", function() {
+            $(".sidebar-menu ").find(".active ").removeClass("active ");
+            $(this).parent().addClass("active ");
+        });
+    })
+</script>
+<!-- /.sidebar -->

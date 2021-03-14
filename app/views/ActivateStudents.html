@@ -1,0 +1,47 @@
+<section class="content-header">
+    <h1>
+        Activate Students
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>FindInbox ID</th>
+                                <th>Student Name</th>
+                                <th>Contact Number</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="student in students">
+                                <td>
+                                    {{$index+1}}
+                                </td>
+                                <td>
+                                    {{student.FindInboxId}}
+                                </td>
+                                <td>
+                                    {{student.Name}}
+                                </td>
+                                <td>
+                                    {{student.PhoneNumber}}
+                                </td>
+                                <td>
+                                    <button ng-disabled="loggedInUser.Role != 'ADMIN'" class="btn btn-primary btn-sm" ng-click="activateStudent(student)">Activate</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>

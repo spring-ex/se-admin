@@ -1,0 +1,66 @@
+<section class="content-header">
+    <h1>
+        Assign Students
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <ui-select ng-model="selected.CourseId" ng-required="true" ng-change="courseSelected(selected.CourseId)">
+                    <ui-select-match placeholder="Choose a {{keywords.CourseKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                        <div ng-bind-html="course.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="selected.BranchId" ng-required="true" ng-change="branchSelected(selected.BranchId)">
+                    <ui-select-match placeholder="Choose a {{keywords.BranchKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                        <div ng-bind-html="branch.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="selected.SemesterId" ng-required="true" ng-change="semesterSelected(selected.SemesterId)">
+                    <ui-select-match placeholder="Choose a {{keywords.SemesterKeyword}}">{{$select.selected.SemesterNumber}}</ui-select-match>
+                    <ui-select-choices repeat="semester.Id as semester in semesters | filter: $select.search">
+                        <div ng-bind-html="semester.SemesterNumber"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="selected.SpecialSubjectId" ng-required="true" ng-change="subjectSelected(selected.SpecialSubjectId)">
+                    <ui-select-match placeholder="Choose a {{keywords.SubjectKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="subject.Id as subject in specialSubjects | filter: $select.search">
+                        <div ng-bind-html="subject.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="selected.SpecialClassId" ng-required="true" ng-change="classSelected(selected.SpecialClassId)">
+                    <ui-select-match placeholder="Choose a {{keywords.ClassKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="class.Id as class in classes | filter: $select.search">
+                        <div ng-bind-html="class.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <button class="btn btn-primary" ng-click="selectAll()">Select All</button>
+            <div ng-repeat="student in students">
+                <label>
+                    <input type="checkbox" ng-model="student.IsSelected" ng-true-value="'true'" ng-false-value="'false'" ng-change="studentSelected(student, $index)">{{student.Name}}
+                </label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4>Selected Students</h4>
+            <ol>
+                <li ng-repeat="selStud in selected.StudentList">
+                    {{selStud.Name}}&nbsp;&nbsp;<a href ng-click="removeStudent(selStud, $index)" class="text-danger">x</a>
+                </li>
+            </ol>
+            <button class="btn btn-primary btn-block" ng-click="assign()">Assign Students to Subject</button>
+        </div>
+    </div>
+</section>

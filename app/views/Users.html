@@ -1,0 +1,74 @@
+<section class="content-header">
+    <h1>
+        Users
+    </h1>
+    <button class="btn btn-flat btn-primary pull-right" ng-click="addUser()">
+        <i class="fa fa-plus"></i>&nbsp;Add User
+    </button>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row" style="margin-bottom:10px;">
+        <div class="col-md-12">
+            <div class="input-group input-group-sm pull-right" style="width: 300px;">
+                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search" ng-model="search.text" ng-change="searchUser()">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Contact Number</th>
+                                <th>Designation</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in users">
+                                <td>
+                                    {{$index+1}}
+                                </td>
+                                <td>
+                                    {{user.Name}}
+                                </td>
+                                <td>
+                                    {{user.Role}}
+                                </td>
+                                <td>
+                                    {{user.PhoneNumber}}
+                                </td>
+                                <td>
+                                    {{user.Designation}}
+                                </td>
+                                <td>
+                                    <div class="btn-group" uib-dropdown dropdown-append-to-body>
+                                        <button id="btn-append-to-body" type="button" class="btn btn-sm btn-primary" uib-dropdown-toggle>
+                                            Actions <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
+                                            <li role="menuitem"><a href ng-disabled="loggedInUser.Role != 'ADMIN'" ng-click="view(user)">View</a></li>
+                                            <li role="menuitem"><a href ng-disabled="loggedInUser.Role != 'ADMIN' && loggedInUser.Role != 'SUPERADMIN'" ng-click="edit(user)">Edit</a></li>
+                                            <li role="menuitem"><a href ng-disabled="loggedInUser.Role != 'ADMIN'" ng-click="assignStudentsToElectives(user)">Assign Elective Students</a></li>
+                                            <li role="menuitem"><a href ng-disabled="loggedInUser.Role != 'ADMIN'" ng-click="resetPassword(user)">Reset Password</a></li>
+                                            <li class="divider"></li>
+                                            <!-- <li role="menuitem"><a href ng-disabled="loggedInUser.Role != 'ADMIN'" ng-click="deleteAttendance(user)">Delete Attendance</a></li> -->
+                                            <li role="menuitem"><a href ng-disabled="loggedInUser.Role != 'ADMIN' || user.Id == loggedInUser.Id" ng-click="deleteUser(user)">Delete User</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>

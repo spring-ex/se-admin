@@ -1,0 +1,44 @@
+<section class="content-header">
+    <h1>
+        Create Special Subjects
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="form-group">
+        <ui-select ng-model="newSubject.CollegeId" ng-required="true" ng-change="collegeSelected()">
+            <ui-select-match placeholder="Choose a College">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="college.Id as college in colleges | filter: $select.search">
+                <div ng-bind-html="college.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newSubject.CourseId" ng-required="true" ng-change="courseSelected()">
+            <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                <div ng-bind-html="course.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newSubject.BranchId" ng-required="true" ng-change="branchSelected()">
+            <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                <div ng-bind-html="branch.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newSubject.SemesterId" ng-required="true">
+            <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+            <ui-select-choices repeat="semester.Id as semester in semesters | filter: $select.search">
+                <div ng-bind-html="semester.SemesterNumber"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <textarea class="form-control" ng-model="subjectNames" rows="5" placeholder="Subject names in pipe separated values"></textarea>
+    </div>
+
+    <button class="btn btn-primary btn-block" ng-click="addSpecialSubject()">Add Subjects</button>
+</section>

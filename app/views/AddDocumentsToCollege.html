@@ -1,0 +1,26 @@
+<section class="content-header">
+    <h1>
+        Assign Documents to College
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-4">
+            <ui-select ng-model="selected.CollegeId" ng-required="true" style="margin-bottom:10px;" ng-change="getAllDocumentsForCollege()">
+                <ui-select-match placeholder="Choose a College">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="college.Id as college in colleges | filter: $select.search">
+                    <div ng-bind-html="college.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div ng-repeat="document in documents">
+                <label>
+                    <input type="checkbox" ng-model="document.isChecked" ng-change="addOrRemoveDocument(document)"> {{document.Name}}
+                </label>
+            </div>
+        </div>
+    </div>
+</section>

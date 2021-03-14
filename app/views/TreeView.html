@@ -1,0 +1,49 @@
+<section class="content-header">
+    <h1>
+        Tree View
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-2">
+            <h2>Colleges</h2>
+            <ol>
+                <li ng-repeat="college in colleges" class="selection-node" ng-click="getAllCourses(college)">
+                    {{college.Name}} - {{college.Id}}
+                </li>
+            </ol>
+        </div>
+        <div class="col-md-2">
+            <h2>Courses</h2>
+            <ol>
+                <li ng-repeat="course in courses" class="selection-node" ng-click="getAllBranches(course)">
+                    {{course.Name}} - {{course.Id}}
+                </li>
+            </ol>
+        </div>
+        <div class="col-md-2">
+            <h2>Branches</h2>
+            <ol>
+                <li ng-repeat="branch in branches" class="selection-node" ng-click="getAllSemesters(branch)">
+                    {{branch.Name}} - {{branch.Id}}
+                </li>
+            </ol>
+        </div>
+        <div class="col-md-2">
+            <h2>Semesters</h2>
+            <ol>
+                <li ng-repeat="sem in semesters" class="selection-node" ng-click="getAllClasses(sem)">
+                    {{sem.SemesterNumber}} - {{sem.Id}}
+                </li>
+            </ol>
+        </div>
+        <div class="col-md-2">
+            <h2>Classes</h2>
+            <ol>
+                <li ng-repeat="class in classes" class="selection-node">
+                    {{class.Name}} - {{class.Id}}
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>

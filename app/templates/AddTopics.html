@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Add Branch</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="form-group">
+        <textarea class="form-control" rows="5" placeholder="Topic Names in pipe separated values" ng-model="topicNames"></textarea>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <textarea class="form-control" rows="5" placeholder="Topic URLs in pipe separated values" ng-model="topicURLs"></textarea>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">Add</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+</div>

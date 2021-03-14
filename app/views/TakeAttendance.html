@@ -1,0 +1,44 @@
+<section class="content-header">
+    <h1>
+        Take Attendance
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-2">
+            <ui-select ng-model="selected.subject" ng-required="true" style="margin-bottom:10px;" ng-change="getAllClassesForSubject(selected.subjectId)">
+                <ui-select-match placeholder="Choose a Subject">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="subject in subjects | filter: $select.search">
+                    <div ng-bind-html="subject.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-md-2">
+            <ui-select ng-model="selected.class" ng-required="true" style="margin-bottom:10px;" ng-change="getAllStudentsForClass(selected.classId)">
+                <ui-select-match placeholder="Choose a Class">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="class in classes | filter: $select.search">
+                    <div ng-bind-html="class.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <p class="input-group" ng-init="dobOpened = false">
+                    <input id="" type="text" ng-change="getAllStudentsInClass()" is-open="dobOpened" uib-datepicker-popup datepicker-options="dateOptions" class="form-control" placeholder="Date Of Attendance" ng-model="selected.attendanceDate">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="dobOpened = !dobOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4" ng-if="students.length > 0">
+            <h4 style="margin-top:0px;">Students</h4>
+            <div ng-repeat="student in students">
+                <label>
+                    <input type="checkbox" ng-model="student.isPresent"> {{student.Name}}
+                </label>
+            </div>
+            <button class="btn btn-primary" ng-click="takeAttendance()">Submit Attendance</button>
+        </div>
+    </div>
+</section>

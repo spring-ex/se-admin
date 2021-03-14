@@ -1,0 +1,93 @@
+<section class="content-header">
+    <h1>
+        Assign Videos to Topics
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="form-group">
+        <ui-select ng-model="selected.CourseId" ng-required="true" ng-change="courseSelected()">
+            <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                <div ng-bind-html="course.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="selected.BranchId" ng-required="true" ng-change="branchSelected()">
+            <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                <div ng-bind-html="branch.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="selected.SemesterId" ng-required="true" ng-change="semesterSelected()">
+            <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+            <ui-select-choices repeat="semester.Id as semester in semesters | filter: $select.search">
+                <div ng-bind-html="semester.SemesterNumber"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="selected.SubjectId" ng-required="true" ng-change="subjectSelected()">
+            <ui-select-match placeholder="Choose a Subject">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="subject.Id as subject in subjects | filter: $select.search">
+                <div ng-bind-html="subject.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="selected.Chapter" ng-required="true" ng-change="chapterSelected()">
+            <ui-select-match placeholder="Choose a Chapter">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="chapter as chapter in chapters | filter: $select.search">
+                <div ng-bind-html="chapter.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="row" style="margin: 10px 0px;border-bottom: 1px solid;padding: 10px 0px;" ng-if="selected.Chapter != null">
+        <div class="col-md-12">
+            <span editable-text="selected.Chapter.Name" onaftersave="editChapter(selected.Chapter)" style="font-weight:bolder;">{{selected.Chapter.Name || 'null'}}</span>
+        </div>
+    </div>
+    <div class="row" ng-repeat="topic in topics" style="margin: 10px 0px;border-bottom: 1px solid;padding: 10px 0px;">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4" style="line-height:34px;">
+                    <span editable-text="topic.Name" onaftersave="editTopic(topic)" style="font-weight:bolder;">{{topic.Name || 'null'}}</span>
+                </div>
+                <div class="col-md-6">
+                    <input style="width:90%;float:left;" class="form-control" type="text" name="topic-video-url" placeholder="Paste URL here" ng-model="topic.VideoURL">
+                    <a style="display: inline-block;padding: 6px 12px;" ng-href="{{topic.VideoURL}}" target="_blank" ng-if="topic.VideoURL != null">Watch</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-sm btn-primary" ng-click="addSubTopics(topic)">
+                        Add SubTopic
+                    </button>
+                    <button class="btn btn-sm btn-danger" ng-click="deleteTopic(topic)">
+                        Delete
+                    </button>
+                </div>
+            </div>
+            <div class="row" ng-repeat="subTopic in topic.SubTopics">
+                <div class="col-md-4" style="line-height:34px;">
+                    <span editable-text="subTopic.Name" onaftersave="editSubTopic(subTopic)">{{subTopic.Name || 'null'}}</span>
+                </div>
+                <div class="col-md-6">
+                    <input style="width:60%;float:left;" class="form-control" type="text" name="sub-topic-video-url" placeholder="Paste URL here" ng-model="subTopic.VideoURL">
+                    <input style="width:40%;float:left;" class="form-control" type="text" name="sub-topic-video-url" placeholder="YouTube Channel" ng-model="subTopic.YTChannelName">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-sm btn-danger" ng-click="deleteSubTopic(subTopic)">
+                        Delete
+                    </button>
+                    <a class="btn btn-sm btn-primary" ng-href="{{subTopic.VideoURL}}" target="_blank" ng-if="subTopic.VideoURL != null">
+                        Watch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary btn-block" ng-click="assignVideos()">Assign Videos</button>
+
+</section>

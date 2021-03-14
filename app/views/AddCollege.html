@@ -1,0 +1,63 @@
+<section class="content-header">
+    <h1>
+        Add College
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="form-group">
+        <input type="text" ng-required="true" class="form-control" placeholder="College Name*" ng-model="newCollege.Name">
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newCollege.Type" ng-required="true">
+            <ui-select-match placeholder="Choose a Type">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="type.Type as type in types | filter: $select.search">
+                <div ng-bind-html="type.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newCollege.PackageCode" ng-required="true">
+            <ui-select-match placeholder="Choose a Package">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="package.PackageCode as package in packages | filter: $select.search">
+                <div ng-bind-html="package.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newCollege.StateId" ng-required="true" ng-change="getAllUniversities()">
+            <ui-select-match placeholder="Choose a State">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="state.Id as state in states | filter: $select.search">
+                <div ng-bind-html="state.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newCollege.UniversityId" ng-required="true">
+            <ui-select-match placeholder="Choose a University">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="university.Id as university in universities | filter: $select.search">
+                <div ng-bind-html="university.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <h3>Admin Details</h3>
+    <form action="POST">
+        <div class="form-group">
+            <label for="newUserName">Name*</label>
+            <input id="newUserName" type="text" class="form-control" placeholder="Name*" ng-model="newCollege.UserDetails.Name" ng-required="true">
+        </div>
+        <div class="form-group">
+            <label for="newUserEmail">Email*</label>
+            <input type="email" id="newUserEmail" class="form-control" placeholder="Email*" ng-model="newCollege.UserDetails.Email" ng-required="true">
+        </div>
+        <div class="form-group">
+            <label for="newUserContactNumber">Contact Number*</label>
+            <input type="number" id="newUserContactNumber" class="form-control" placeholder="Contact Number*" ng-model="newCollege.UserDetails.PhoneNumber">
+        </div>
+        <div class="form-group">
+            <label for="newUserPassword">Default Password*</label>
+            <input type="text" id="newUserPassword" ng-required="true" class="form-control" placeholder="Default Password*" ng-model="newCollege.UserDetails.Password">
+        </div>
+    </form>
+
+    <button class="btn btn-primary btn-block" ng-click="addCollege()">Add College</button>
+</section>

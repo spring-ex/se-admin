@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Add Branch</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="form-group">
+        <ui-select ng-model="newBranch.CourseId" ng-required="true">
+            <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                <div ng-bind-html="course.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Branch Names in pipe separated values" ng-model="branchNames">
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">Add</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+</div>

@@ -1,0 +1,316 @@
+<section class="content-header">
+    <h1>
+        Add/Edit User
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <wizard on-finish="finishedWizard()" indicators-position="top">
+        <wz-step wz-title="Personal Information" canexit="userDataUpdated">
+            <h3>Personal Information</h3>
+            <div class="row">
+                <div class="col-md-6" style="margin: auto">
+                    <form action="POST">
+                        <div class="form-group">
+                            <label for="newUserName">Name*</label>
+                            <input id="newUserName" type="text" class="form-control" placeholder="Name*" ng-model="newUser.Name" ng-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserRole">Role*</label>
+                            <ui-select ng-model="newUser.Role" ng-required="true" id="newUserRole">
+                                <ui-select-match placeholder="Choose a Role">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="role.RoleCode as role in roles | filter: $select.search">
+                                    <div ng-bind-html="role.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserEmail">Email*</label>
+                            <input type="email" id="newUserEmail" class="form-control" placeholder="Email*" ng-model="newUser.Email" ng-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserContactNumber">Contact Number*</label>
+                            <input type="number" id="newUserContactNumber" class="form-control" placeholder="Contact Number*" ng-model="newUser.PhoneNumber">
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserDOB">Date of Birth*</label>
+                            <p class="input-group" ng-init="dobOpened = false">
+                                <input id="newUserDOB" type="text" is-open="dobOpened" uib-datepicker-popup datepicker-options="dateOptions" class="form-control" placeholder="Date Of Birth" ng-model="newUser.DateOfBirth">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="dobOpened = !dobOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserAddress">Address*</label>
+                            <textarea placeholder="Address*" id="newUserAddress" cols="30" rows="3" class="form-control" ng-model="newUser.Address"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserDesignation">Designation*</label>
+                            <input type="text" id="newUserDesignation" class="form-control" placeholder="Designation*" ng-model="newUser.Designation">
+                        </div>
+                        <div class="form-group" ng-if="isAdd">
+                            <label for="newUserPassword">Default Password*</label>
+                            <input type="text" id="newUserPassword" ng-required="true" class="form-control" placeholder="Default Password*" ng-model="newUser.Password">
+                        </div>
+                    </form>
+                    <button class="btn btn-primary btn-flat btn-small pull-right" wz-next>Next</button>
+                </div>
+            </div>
+        </wz-step>
+        <wz-step wz-title="Educational Background">
+            <!-- canexit="educationDataUpdated" has been removed -->
+            <h3>Educational Background</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table table-bordered edit-tables" ng-show="newUser.UserEducation.length > 0">
+                        <thead>
+                            <tr>
+                                <th>University</th>
+                                <th>Degree</th>
+                                <th>Year of Passing</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ed in newUser.UserEducation">
+                                <td>{{ed.University}}</td>
+                                <td>{{ed.Degree}}</td>
+                                <td>{{ed.YearOfPassing}}</td>
+                                <td>
+                                    <button class="btn btn-xs btn-flat btn-danger" ng-click="deleteEducation($index)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="POST">
+                        <div class="form-group">
+                            <input type="text" ng-required="true" class="form-control" placeholder="University*" ng-model="UserEducationTemplate.University">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" ng-required="true" class="form-control" placeholder="Degree*" ng-model="UserEducationTemplate.Degree">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" ng-required="true" class="form-control" placeholder="Year of Passing*" ng-model="UserEducationTemplate.YearOfPassing">
+                        </div>
+                    </form>
+                    <button class="btn btn-primary btn-flat btn-small btn-block" style="margin-bottom:25px;" ng-click="addEducation()">Add</button>
+                    <button class="btn btn-primary btn-flat btn-small pull-left" wz-previous>Back</button>
+                    <button class="btn btn-primary btn-flat btn-small pull-right" wz-next>Next</button>
+                </div>
+            </div>
+        </wz-step>
+        <wz-step wz-title="{{keywords.SubjectKeyword}}s Taught">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>{{keywords.SubjectKeyword}}s Taught</h3>
+                    <table class="table table-bordered edit-tables" ng-show="newUser.Subjects.length > 0">
+                        <thead>
+                            <tr>
+                                <th>{{keywords.BranchKeyword}}</th>
+                                <th>{{keywords.SemesterKeyword}}</th>
+                                <th>{{keywords.ClassKeyword}}</th>
+                                <th>{{keywords.SubjectKeyword}}</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="sub in newUser.Subjects">
+                                <td>{{sub.BranchName}}</td>
+                                <td>{{sub.SemesterName}}</td>
+                                <td>{{sub.ClassName}}</td>
+                                <td>{{sub.Name}}</td>
+                                <td><button class="btn btn-xs btn-flat btn-danger" ng-click="deleteSubject($index)">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <form>
+                        <div class="form-group">
+                            <ui-select ng-model="selected.Course" ng-required="true" ng-change="courseSelected(selected.Course, 1)">
+                                <ui-select-match placeholder="Choose a {{keywords.CourseKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="course in courses | filter: $select.search">
+                                    <div ng-bind-html="course.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <ui-select ng-model="selected.Branch" ng-required="true" ng-change="branchSelected(selected.Branch, 1)">
+                                <ui-select-match placeholder="Choose a {{keywords.BranchKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="branch in branches | filter: $select.search">
+                                    <div ng-bind-html="branch.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <ui-select ng-model="selected.Semester" ng-required="true" ng-change="semesterSelected(selected.Semester, 1)">
+                                <ui-select-match placeholder="Choose a {{keywords.SemesterKeyword}}">{{$select.selected.SemesterNumber}}</ui-select-match>
+                                <ui-select-choices repeat="sem in semesters | filter: $select.search">
+                                    <div ng-bind-html="sem.SemesterNumber"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <ui-select ng-model="selected.Class" ng-required="true">
+                                <ui-select-match placeholder="Choose a {{keywords.ClassKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="class in classes | filter: $select.search">
+                                    <div ng-bind-html="class.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </form>
+                    <div class="col-md-6">
+                        <div class="form-group" ng-if="subjects.length > 0">
+                            Choose {{keywords.SubjectKeyword}}s :
+                            <div class="checkbox" ng-repeat="subject in subjects">
+                                <label>
+                                    <input type="checkbox" ng-model="subject.isSelected"> {{subject.Name}}
+                                </label>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-flat btn-small btn-block" style="margin-bottom:25px;" ng-click="addSubject()">Add Subject</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" ng-if="loggedInUser.PackageCode = 'BASIC'">
+                    <h3>Special Subjects Taught</h3>
+                    <table class="table table-bordered edit-tables" ng-show="newUser.SpecialSubjects.length > 0">
+                        <thead>
+                            <tr>
+                                <th>{{keywords.SemesterKeyword}}</th>
+                                <th>{{keywords.SubjectKeyword}}</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ssub in newUser.SpecialSubjects">
+                                <td>{{ssub.SemesterId}}</td>
+                                <td>{{ssub.Name}}</td>
+                                <td><button class="btn btn-xs btn-flat btn-danger" ng-click="deleteSpecialSubject($index)">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <form>
+                        <div class="form-group">
+                            <ui-select ng-model="specialSelected.Course" ng-required="true" ng-change="courseSelected(specialSelected.Course, 0)">
+                                <ui-select-match placeholder="Choose a {{keywords.CourseKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="course in specialCourses | filter: $select.search">
+                                    <div ng-bind-html="course.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <ui-select ng-model="specialSelected.Branch" ng-required="true" ng-change="branchSelected(specialSelected.Branch, 0)">
+                                <ui-select-match placeholder="Choose a {{keywords.BranchKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="branch in specialBranches | filter: $select.search">
+                                    <div ng-bind-html="branch.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <ui-select ng-model="specialSelected.Semester" ng-required="true" ng-change="semesterSelected(specialSelected.Semester, 0)">
+                                <ui-select-match placeholder="Choose a {{keywords.SemesterKeyword}}">{{$select.selected.SemesterNumber}}</ui-select-match>
+                                <ui-select-choices repeat="sem in specialSemesters | filter: $select.search">
+                                    <div ng-bind-html="sem.SemesterNumber"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <ui-select ng-model="specialSelected.Class" ng-required="true">
+                                <ui-select-match placeholder="Choose a {{keywords.ClassKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="class in specialClasses | filter: $select.search">
+                                    <div ng-bind-html="class.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </form>
+                    <div class="col-md-6">
+                        <div class="form-group" ng-if="specialSubjects.length > 0">
+                            Choose {{keywords.SubjectKeyword}}s :
+                            <div class="checkbox" ng-repeat="specialSubject in specialSubjects">
+                                <label>
+                                    <input type="checkbox" ng-model="specialSubject.isSelected"> {{specialSubject.Name}}
+                                </label>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-flat btn-small btn-block" style="margin-bottom:25px;" ng-click="addSpecialSubject()">Add Special Subject</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-primary btn-flat btn-small pull-left" wz-previous>Back</button>
+                    <button class="btn btn-primary btn-flat btn-small pull-right" wz-next>Next</button>
+                </div>
+            </div>
+        </wz-step>
+        <wz-step wz-title="Previous Work Experience">
+            <h3>Previous Work Experience</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table table-bordered edit-tables" ng-show="newUser.UserExperience.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Institution</th>
+                                <th>Designation</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ex in newUser.UserExperience">
+                                <td>{{ex.CollegeName}}</td>
+                                <td>{{ex.Designation}}</td>
+                                <td>{{ex.FromDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{ex.ToDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <button class="btn btn-xs btn-flat btn-danger" ng-click="deleteExperience($index)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="POST">
+                        <div class="form-group">
+                            <input type="text" ng-required="true" class="form-control" placeholder="Institution*" ng-model="UserExperienceTemplate.CollegeName">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" ng-required="true" class="form-control" placeholder="Designation*" ng-model="UserExperienceTemplate.Designation">
+                        </div>
+                        <div class="form-group">
+                            <p class="input-group" ng-init="fromOpened = false">
+                                <input type="text" is-open="fromOpened" uib-datepicker-popup datepicker-options="dateOptions" class="form-control" placeholder="From Date" ng-model="UserExperienceTemplate.FromDate">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="fromOpened = !fromOpened">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <p class="input-group" ng-init="toOpened = false">
+                                <input type="text" is-open="toOpened" uib-datepicker-popup datepicker-options="dateOptions" class="form-control" placeholder="To Date" ng-model="UserExperienceTemplate.ToDate">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="toOpened = !toOpened">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                    </form>
+                    <button class="btn btn-primary btn-flat btn-small btn-block" style="margin-bottom:25px;" ng-click="addExperience()">Add</button>
+                    <button class="btn btn-primary btn-flat btn-small pull-left" wz-previous>Back</button>
+                    <button class="btn btn-success btn-flat btn-small pull-right" ng-if="isAdd" ng-click="submit()">Submit</button>
+                    <button class="btn btn-success btn-flat btn-small pull-right" ng-if="!isAdd" ng-click="update()">Update</button>
+                </div>
+            </div>
+        </wz-step>
+    </wizard>
+</section>

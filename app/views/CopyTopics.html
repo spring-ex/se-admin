@@ -1,0 +1,107 @@
+<section class="content-header">
+    <h1>
+        Copy Topics
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="text-center">Source</h3>
+            <div class="form-group">
+                <ui-select ng-model="source.CourseId" ng-required="true" ng-change="courseSelected(1)">
+                    <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="course.Id as course in sourceCourses | filter: $select.search">
+                        <div ng-bind-html="course.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="source.BranchId" ng-required="true" ng-change="branchSelected(1)">
+                    <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="branch.Id as branch in sourceBranches | filter: $select.search">
+                        <div ng-bind-html="branch.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="source.SemesterId" ng-required="true" ng-change="semesterSelected(1)">
+                    <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+                    <ui-select-choices repeat="semester.Id as semester in sourceSemesters | filter: $select.search">
+                        <div ng-bind-html="semester.SemesterNumber"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="source.SubjectId" ng-required="true" ng-change="subjectSelected(1)">
+                    <ui-select-match placeholder="Choose a Subject">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="subject.Id as subject in sourceSubjects | filter: $select.search">
+                        <div ng-bind-html="subject.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="source.ChapterId" ng-required="true" ng-change="chapterSelected(1)">
+                    <ui-select-match placeholder="Choose a Chapter">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="chapter.Id as chapter in sourceChapters | filter: $select.search">
+                        <div ng-bind-html="chapter.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <h3 class="text-center" ng-if="sourceTopics.length > 0">Topics</h3>
+            <button ng-if="sourceTopics.length > 0" class="btn btn-primary btn-sm" ng-click="selectAllTopics()">Select All</button>
+            <div ng-repeat="topic in sourceTopics">
+                <label>
+                    <input type="checkbox" ng-model="topic.IsSelected" ng-true-value="'true'" ng-false-value="'false'">{{topic.Name}}
+                </label>
+            </div>
+            <button class="btn btn-primary btn-block" ng-click="copyTopics()" ng-if="sourceTopics.length > 0">Copy Topics</button>
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-center">Destination</h3>
+            <div class="form-group">
+                <ui-select ng-model="destination.CourseId" ng-required="true" ng-change="courseSelected(0)">
+                    <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="course.Id as course in destinationCourses | filter: $select.search">
+                        <div ng-bind-html="course.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="destination.BranchId" ng-required="true" ng-change="branchSelected(0)">
+                    <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="branch.Id as branch in destinationBranches | filter: $select.search">
+                        <div ng-bind-html="branch.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="destination.SemesterId" ng-required="true" ng-change="semesterSelected(0)">
+                    <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+                    <ui-select-choices repeat="semester.Id as semester in destinationSemesters | filter: $select.search">
+                        <div ng-bind-html="semester.SemesterNumber"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="destination.SubjectId" ng-required="true" ng-change="subjectSelected(0)">
+                    <ui-select-match placeholder="Choose a Subject">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="subject.Id as subject in destinationSubjects | filter: $select.search">
+                        <div ng-bind-html="subject.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="destination.ChapterId" ng-required="true" ng-change="chapterSelected(0)">
+                    <ui-select-match placeholder="Choose a Chapter">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="chapter.Id as chapter in destinationChapters | filter: $select.search">
+                        <div ng-bind-html="chapter.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <h3 class="text-center" ng-if="destinationTopics.length > 0">Topics</h3>
+            <ol>
+                <li ng-repeat="topic in destinationTopics">{{topic.Name}}</li>
+            </ol>
+        </div>
+    </div>
+</section>

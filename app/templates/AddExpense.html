@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Add Expense</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Reason for expense*" ng-model="newExpense.Particulars">
+    </div>
+    <div class="form-group">
+        <input type="number" class="form-control" placeholder="Amount*" ng-model="newExpense.Amount">
+    </div>
+    <div class="form-group">
+        <p class="input-group" ng-init="dobOpened = false">
+            <input id="newExpenseDate" type="text" is-open="dobOpened" uib-datepicker-popup datepicker-options="dateOptions" class="form-control"
+                placeholder="Date Of Expense" ng-model="newExpense.ExpenseDate">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="dobOpened = !dobOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">Add</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+</div>

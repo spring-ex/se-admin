@@ -1,0 +1,91 @@
+<section class="content-header">
+    <h1>
+        Link Special Subjects
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <ui-select ng-model="source.CollegeId" ng-required="true" ng-change="collegeSelected(1)">
+                    <ui-select-match placeholder="Choose a College">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="college.Id as college in sourceColleges | filter: $select.search">
+                        <div ng-bind-html="college.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="source.CourseId" ng-required="true" ng-change="courseSelected(1)">
+                    <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="course.Id as course in sourceCourses | filter: $select.search">
+                        <div ng-bind-html="course.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="source.BranchId" ng-required="true" ng-change="branchSelected(1)">
+                    <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="branch.Id as branch in sourceBranches | filter: $select.search">
+                        <div ng-bind-html="branch.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="source.SemesterId" ng-required="true" ng-change="getAllSpecialSubjects()">
+                    <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+                    <ui-select-choices repeat="semester.Id as semester in sourceSemesters | filter: $select.search">
+                        <div ng-bind-html="semester.SemesterNumber"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="source.SpecialSubjectId" ng-required="true">
+                    <ui-select-match placeholder="Choose a SpecialSubject">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="ss.Id as ss in specialSubjects | filter: $select.search">
+                        <div ng-bind-html="ss.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <ui-select ng-model="destination.CollegeId" ng-required="true" ng-change="collegeSelected(0)">
+                    <ui-select-match placeholder="Choose a College">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="college.Id as college in destinationColleges | filter: $select.search">
+                        <div ng-bind-html="college.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="destination.CourseId" ng-required="true" ng-change="courseSelected(0)">
+                    <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="course.Id as course in destinationCourses | filter: $select.search">
+                        <div ng-bind-html="course.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="destination.BranchId" ng-required="true" ng-change="branchSelected(0)">
+                    <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="branch.Id as branch in destinationBranches | filter: $select.search">
+                        <div ng-bind-html="branch.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="destination.SemesterId" ng-required="true" ng-change="getAllSubjects();">
+                    <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+                    <ui-select-choices repeat="semester.Id as semester in destinationSemesters | filter: $select.search">
+                        <div ng-bind-html="semester.SemesterNumber"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div ng-repeat="subject in subjects">
+                <label>
+                    <input type="checkbox" ng-model="subject.IsSelected" ng-true-value="'true'" ng-false-value="'false'">{{subject.Name}}
+                </label>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary btn-block" ng-click="linkSubjects()">Link Subjects</button>
+</section>

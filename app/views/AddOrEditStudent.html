@@ -1,0 +1,182 @@
+<section class="content-header">
+    <h1>
+        Add/Edit Student
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-8" style="margin: auto">
+            <form>
+                <div class="form-group">
+                    <label for="newAdmissionName">Student Name*</label>
+                    <input id="newAdmissionName" type="text" class="form-control" placeholder="Student Name*" ng-model="newAdmission.Name" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="newAdmissionGender">Gender*</label>
+                    <ui-select ng-model="newAdmission.GenderId" ng-required="true" id="newAdmissionGender">
+                        <ui-select-match placeholder="Choose a Gender">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="gender.Id as gender in genders | filter: $select.search">
+                            <div ng-bind-html="gender.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
+                    <label for="newAdmissionCourse">{{keywords.CourseKeyword}}</label>
+                    <ui-select ng-model="newAdmission.CourseId" ng-required="true" id="newAdmissionCourse" ng-change="courseSelected(newAdmission.CourseId)">
+                        <ui-select-match placeholder="Choose a {{keywords.CourseKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                            <div ng-bind-html="course.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
+                    <label for="newAdmissionBranch">{{keywords.BranchKeyword}}</label>
+                    <ui-select ng-model="newAdmission.BranchId" ng-required="true" id="newAdmissionBranch" ng-change="branchSelected(newAdmission.BranchId)">
+                        <ui-select-match placeholder="Choose a {{keywords.BranchKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                            <div ng-bind-html="branch.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
+                    <label for="newAdmissionSemester">{{keywords.SemesterKeyword}}</label>
+                    <ui-select ng-model="newAdmission.SemesterId" ng-required="true" id="newAdmissionSemester" ng-change="semesterSelected(newAdmission.SemesterId)">
+                        <ui-select-match placeholder="Choose a {{keywords.SemesterKeyword}}">{{$select.selected.SemesterNumber}}</ui-select-match>
+                        <ui-select-choices repeat="semester.Id as semester in semesters | filter: $select.search">
+                            <div ng-bind-html="semester.SemesterNumber"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
+                    <label for="newAdmissionClass">{{keywords.ClassKeyword}}</label>
+                    <ui-select ng-model="newAdmission.ClassId" ng-required="true" id="newAdmissionClass">
+                        <ui-select-match placeholder="Choose a {{keywords.ClassKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="class.Id as class in classes | filter: $select.search">
+                            <div ng-bind-html="class.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
+                    <label for="newAdmissionDob">Date of birth*</label>
+                    <p class="input-group" ng-init="dobOpened = false">
+                        <input id="newAdmissionDob" type="text" is-open="dobOpened" uib-datepicker-popup datepicker-options="dateOptions" class="form-control" placeholder="Date Of Birth" ng-model="newAdmission.DateOfBirth">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="dobOpened = !dobOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode == 'EXTENDED'">
+                    <label for="newAdmissionAadhaar">Aadhaar Number</label>
+                    <input type="number" id="newAdmissionAadhaar" class="form-control" placeholder="Aadhaar Number*" ng-model="newAdmission.AadhaarNumber" ng-required="true">
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode != 'LM'">
+                    <label for="newAdmissionPH">Contact Number</label>
+                    <input type="number" id="newAdmissionPH" class="form-control" placeholder="Contact Number*" ng-model="newAdmission.PhoneNumber" ng-required="true">
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                    <label for="newAdmissionFN">Father's Name*</label>
+                    <input type="text" id="newAdmissionFN" class="form-control" placeholder="Father's Name*" ng-model="newAdmission.FatherName" ng-required="true">
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode == 'EXTENDED'">
+                    <label for="newAdmissionFN">Grades you teach*</label>
+                    <input type="text" id="newAdmissionFN" class="form-control" placeholder="Grades you teach*" ng-model="newAdmission.FatherName" ng-required="true">
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                    <label for="newAdmissionFO">Father's Occupation</label>
+                    <input type="text" id="newAdmissionFO" class="form-control" placeholder="Father's Occupation" ng-model="newAdmission.FatherOccupation">
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode == 'EXTENDED'">
+                    <label for="newAdmissionFO">Subjects Taught*</label>
+                    <input type="text" id="newAdmissionFO" class="form-control" placeholder="Subjects Taught*" ng-model="newAdmission.FatherOccupation">
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                    <label for="newAdmissionFPh">Father's Phone Number</label>
+                    <input type="number" id="newAdmissionFPh" class="form-control" placeholder="Father's Phone Number" ng-model="newAdmission.FatherPhoneNumber">
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                    <label for="newAdmissionMN">Mother's Name*</label>
+                    <input type="text" id="newAdmissionMN" class="form-control" placeholder="Mother's Name*" ng-model="newAdmission.MotherName" ng-required="true">
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                    <label for="newAdmissionMO">Mother's Occupation</label>
+                    <input type="text" id="newAdmissionMO" class="form-control" placeholder="Mother's Occupation" ng-model="newAdmission.MotherOccupation">
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                    <label for="newAdmissionMPh">Mother's Phone Number</label>
+                    <input type="number" id="newAdmissionMPh" class="form-control" placeholder="Mother's Phone Number" ng-model="newAdmission.MotherPhoneNumber">
+                </div>
+                <div class="form-group">
+                    <label for="newAdmissionEmail">Email</label>
+                    <input type="email" id="newAdmissionEmail" class="form-control" placeholder="Email" ng-model="newAdmission.Email" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="newAdmissionAddress">Address</label>
+                    <textarea name="address" id="newAdmissionAddress" class="form-control" cols="30" rows="4" placeholder="Address" ng-model="newAdmission.Address"></textarea>
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                    <label for="newAdmissionTotalFees">Total Fees</label>
+                    <input type="number" id="newAdmissionTotalFees" class="form-control" placeholder="Total Fees" ng-model="newAdmission.TotalFees" ng-required="true">
+                </div>
+                <div class="form-group" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                    <label for="newAdmissionRemarks">Remarks</label>
+                    <textarea name="remarks" id="newAdmissionRemarks" class="form-control" cols="30" rows="4" placeholder="Remarks" ng-model="newAdmission.Remarks"></textarea>
+                </div>
+                <hr>
+                <h3 ng-if="loggedInUser.PackageCode != 'EXTENDED'">Payment</h3>
+                <div class="row" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                    <div class="col-md-12">
+                        <table class="table table-bordered edit-tables" ng-show="newAdmission.Payment.length > 0">
+                            <thead>
+                                <tr>
+                                    <th>Amount</th>
+                                    <th>Payment Mode</th>
+                                    <th>Cheque Details</th>
+                                    <th>Payment Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="admission in newAdmission.Payment">
+                                    <td>{{admission.FeesPaid}}</td>
+                                    <td>{{admission.PaymentMode}}</td>
+                                    <td>{{admission.PaymentModeNumber}}</td>
+                                    <td>{{admission.PaymentDate | date: 'dd/MM/yyyy'}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-xs btn-flat btn-danger" ng-click="deletePayment($index)">Delete
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                    <div class="col-md-2">
+                        <input type="number" class="form-control" placeholder="FeesPaid" ng-model="newPayment.FeesPaid">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="Payment Mode" ng-model="newPayment.PaymentMode">
+                    </div>                    
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="Cheque Details" ng-model="newPayment.PaymentModeNumber">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p class="input-group" ng-init="paymentDateOpened = false">
+                                <input id="newAdmissionPaymentDate" type="text" is-open="paymentDateOpened" uib-datepicker-popup datepicker-options="dateOptions" class="form-control"
+                                    placeholder="Date of payment" ng-model="newPayment.PaymentDate">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="paymentDateOpened = !paymentDateOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                        </p>
+                    </div>
+                </div>
+                <div class="col-md-1" style="padding-left: 8px;">
+                    <button type="button" class="btn btn-primary" ng-click="addPayment()">Add</button>
+                </div>
+        </div>
+        </form>
+        <button class="btn btn-primary btn-block" ng-click="addStudent()" ng-show="param == 1 || param == 2">Admit Student</button>
+        <button class="btn btn-primary btn-block" ng-click="updateStudent()" ng-show="param == 0">Update Student</button>
+    </div>
+    </div>
+</section>

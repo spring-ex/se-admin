@@ -1,0 +1,64 @@
+<section class="content-header">
+    <h1>
+        Course Outcomes
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-2">
+            <ui-select ng-model="selected.subject" ng-required="true" style="margin-bottom:10px;" ng-change="getAllClassesForSubject()">
+                <ui-select-match placeholder="Choose a Subject">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="subject in subjects | filter: $select.search">
+                    <div ng-bind-html="subject.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-md-2">
+            <ui-select ng-model="selected.class" ng-required="true" style="margin-bottom:10px;" ng-change="getAllStudentsInClass()">
+                <ui-select-match placeholder="Choose a Class">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="class in classes | filter: $select.search">
+                    <div ng-bind-html="class.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-md-2">
+            <ui-select ng-model="newCO.Name" ng-required="true" style="margin-bottom:10px;">
+                <ui-select-match placeholder="Choose a CO">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="co.Name as co in cos | filter: $select.search ">
+                    <div ng-bind-html="co.Name "></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <textarea class="form-control" name="newCODescription" cols="30" rows="5" placeholder="Describe the Course Outcome" ng-model="newCO.Description">
+                    </textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="programOutcomes.length > 0">
+        <div class="col-md-12">
+            <h3>Choose the Program Outcomes</h3>
+            <div ng-repeat="po in programOutcomes">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>
+                            <input  type="checkbox" ng-model="po.isChecked" > {{po.Name}} - {{po.Description}}
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <ui-select ng-model="po.Descriptor" ng-required="true" style="margin-bottom:10px;">
+                            <ui-select-match placeholder="Choose a Descriptor">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="descriptor.Name as descriptor in descriptors | filter: $select.search ">
+                                <div ng-bind-html="descriptor.Name "></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary btn-block" style="width: 30%;" ng-click="createNewCo()">Create Course Outcome</button>
+</section>

@@ -1,0 +1,107 @@
+<section class="content-header">
+    <h1>
+        Enquiry Form
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-8" style="margin: auto">
+            <form>
+                <div class="form-group">
+                    <label for="newEnquirySession">Session*</label>
+                    <input id="newEnquirySession" type="text" class="form-control" placeholder="Session*" ng-model="newEnquiry.EnquirySession" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryName">Student Name*</label>
+                    <input id="newEnquiryName" type="text" class="form-control" placeholder="Student Name*" ng-model="newEnquiry.Name" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryGender">Gender*</label>
+                    <ui-select ng-model="newEnquiry.GenderId" ng-required="true" id="newEnquiryGender">
+                        <ui-select-match placeholder="Choose a Gender">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="gender.Id as gender in genders | filter: $select.search">
+                            <div ng-bind-html="gender.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryCourse">Course</label>
+                    <ui-select ng-model="newEnquiry.CourseId" ng-required="true" id="newEnquiryCourse" ng-change="courseSelected(newEnquiry.CourseId)">
+                        <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                            <div ng-bind-html="course.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryBranch">Interested in joining*</label>
+                    <ui-select ng-model="newEnquiry.BranchId" ng-required="true" id="newEnquiryBranch" ng-change="branchSelected(newEnquiry.BranchId)">
+                        <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                            <div ng-bind-html="branch.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryDob">Date of birth*</label>
+                    <p class="input-group" ng-init="dobOpened = false">
+                        <input id="newEnquiryDob" type="text" is-open="dobOpened" uib-datepicker-popup datepicker-options="dateOptions" class="form-control"
+                            placeholder="Date Of Birth" ng-model="newEnquiry.DateOfBirth">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="dobOpened = !dobOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryFN">Father's Name*</label>
+                    <input type="text" id="newEnquiryFN" class="form-control" placeholder="Father's Name*" ng-model="newEnquiry.FatherName" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryFO">Father's Occupation</label>
+                    <input type="text" id="newEnquiryFO" class="form-control" placeholder="Father's Occupation" ng-model="newEnquiry.FatherOccupation">
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryMN">Mother's Name*</label>
+                    <input type="text" id="newEnquiryMN" class="form-control" placeholder="Mother's Name*" ng-model="newEnquiry.MotherName" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryMO">Mother's Occupation</label>
+                    <input type="text" id="newEnquiryMO" class="form-control" placeholder="Mother's Occupation" ng-model="newEnquiry.MotherOccupation">
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryPH">Contact Number*</label>
+                    <input type="number" id="newEnquiryPH" class="form-control" placeholder="Contact Number*" ng-model="newEnquiry.PhoneNumber"
+                        ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryEmail">Email</label>
+                    <input type="email" id="newEnquiryEmail" class="form-control" placeholder="Email" ng-model="newEnquiry.Email" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryAddress">Address</label>
+                    <textarea name="address" id="newEnquiryAddress" class="form-control" cols="30" rows="4" placeholder="Address" ng-model="newEnquiry.Address"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="newEnquiryLikely">Likely to join?</label>
+                    <ui-select ng-model="newEnquiry.LikelyToJoin" ng-required="true" id="newEnquiryLikely">
+                        <ui-select-match placeholder="Likely to Join?">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="likely.Name as likely in likelyItems | filter: $select.search">
+                            <div ng-bind-html="likely.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">How did you hear about us?</label>
+                    <div class="col-md-10" style="margin-bottom:15px;">
+                        <div ng-repeat="source in sources" style="display: inline; margin-right:15px;">
+                            <label>
+                                <input  type="checkbox" ng-model="source.isChecked" > {{source.Name}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <button class="btn btn-primary btn-block" ng-click="addEnquiry()">Add Enquiry</button>
+        </div>
+    </div>
+</section>

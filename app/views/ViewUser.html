@@ -1,0 +1,178 @@
+<section class="content-header">
+    <h1>
+        <button class="btn btn-sm btn-primary" ng-click="goBack()">Back</button>&nbsp;User Details
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Personal Details</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row detail-item">
+                        <div class="col-md-4">
+                            <b>Name</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{user.Name}}
+                        </div>
+                    </div>
+                    <div class="row detail-item">
+                        <div class="col-md-4">
+                            <b>Email</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{user.Email}}
+                        </div>
+                    </div>
+                    <div class="row detail-item">
+                        <div class="col-md-4">
+                            <b>Phone Number</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{user.PhoneNumber}}
+                        </div>
+                    </div>
+                    <div class="row detail-item">
+                        <div class="col-md-4">
+                            <b>Date of Birth</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{user.DateOfBirth | date: 'mm/dd/yyyy'}}
+                        </div>
+                    </div>
+                    <div class="row detail-item">
+                        <div class="col-md-4">
+                            <b>Designation</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{user.Designation}}
+                        </div>
+                    </div>
+                    <div class="row detail-item">
+                        <div class="col-md-4">
+                            <b>Address</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{user.Address}}
+                        </div>
+                    </div>
+                    <div class="row detail-item">
+                        <div class="col-md-4">
+                            <b>City</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{user.City}}
+                        </div>
+                    </div>
+                    <div class="row detail-item">
+                        <div class="col-md-4">
+                            <b>State</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{user.State}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">{{keywords.SubjectKeyword}}s Taught</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-striped" ng-show="user.Subjects.length > 0">
+                        <thead>
+                            <tr>
+                                <th>{{keywords.BranchKeyword}}</th>
+                                <th>{{keywords.SemesterKeyword}}</th>
+                                <th>{{keywords.ClassKeyword}}</th>
+                                <th>{{keywords.SubjectKeyword}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="sub in user.Subjects">
+                                <td>{{sub.BranchName || "N/A"}}</td>
+                                <td>{{sub.SemesterName || sub.SemesterId}}</td>
+                                <td>{{sub.ClassName || "N/A"}}</td>
+                                <td>{{sub.Name}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-hide="user.Subjects.length > 0">
+                        <div class="col-md-12">
+                            There are no entries present
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Education Details</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-striped" ng-show="user.UserEducation.length > 0">
+                        <thead>
+                            <tr>
+                                <th>University</th>
+                                <th>Degree</th>
+                                <th>Year of Passing</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ed in user.UserEducation">
+                                <td>{{ed.University}}</td>
+                                <td>{{ed.Degree}}</td>
+                                <td>{{ed.YearOfPassing}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-hide="user.UserEducation.length > 0">
+                        <div class="col-md-12">
+                            There are no entries present
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Experience Details</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-striped" ng-show="user.UserExperience.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Institution</th>
+                                <th>Designation</th>
+                                <th>From</th>
+                                <th>To</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ex in user.UserExperience">
+                                <td>{{ex.CollegeName}}</td>
+                                <td>{{ex.Designation}}</td>
+                                <td>{{ex.FromDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{ex.ToDate | date: 'dd/MM/yyyy'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" ng-hide="user.UserExperience.length > 0">
+                        <div class="col-md-12">
+                            There are no entries present
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

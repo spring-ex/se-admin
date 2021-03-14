@@ -1,0 +1,107 @@
+<section class="content-header">
+    <h1>
+        <button class="btn btn-sm btn-primary" ng-click="goBack()">Back</button>&nbsp;Student Details
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">{{student.Name}}'s Details</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row detail-item">
+                        <div class="col-md-4">
+                            <b>Name</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{student.Name}}
+                        </div>
+                    </div>
+                    <div class="row detail-item">
+                        <div class="col-md-4">
+                            <b>Contact Number</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{student.PhoneNumber}}
+                        </div>
+                    </div>
+                    <div class="row detail-item">
+                        <div class="col-md-4">
+                            <b ng-if="loggedInUser.PackageCode != 'EXTENDED'">Father's Name</b>
+                            <b ng-if="loggedInUser.PackageCode == 'EXTENDED'">Grades you teach</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{student.FatherName}}
+                        </div>
+                    </div>
+                    <div class="row detail-item" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                        <div class="col-md-4">
+                            <b>Father's Phone Number</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{student.FatherPhoneNumber}}
+                        </div>
+                    </div>
+                    <div class="row detail-item" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                        <div class="col-md-4">
+                            <b>Mother's Name</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{student.MotherName}}
+                        </div>
+                    </div>
+                    <div class="row detail-item" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                        <div class="col-md-4">
+                            <b>Mother's Phone Number</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{student.MotherPhoneNumber}}
+                        </div>
+                    </div>
+                    <div class="row detail-item" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                        <div class="col-md-4">
+                            <b>Total Fees</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{student.TotalFees}}
+                        </div>
+                    </div>
+                    <div class="row detail-item" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                        <div class="col-md-4">
+                            <b>Remarks</b>
+                        </div>
+                        <div class="col-md-8">
+                            {{student.Remarks}}
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:15px;" ng-if="loggedInUser.PackageCode != 'EXTENDED'">
+                        <div class="col-md-12">
+                            <b>Payment Information</b>
+                            <div ng-show="student.Payment.length == 0">Payment has not been received yet!</div>
+                            <table class="table table-bordered edit-tables" ng-show="student.Payment.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Amount</th>
+                                        <th>Payment Mode</th>
+                                        <th>Cheque Details</th>
+                                        <th>Payment Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="admission in student.Payment">
+                                        <td>{{admission.FeesPaid}}</td>
+                                        <td>{{admission.PaymentMode}}</td>
+                                        <td>{{admission.PaymentModeNumber}}</td>
+                                        <td>{{admission.PaymentDate | date: 'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

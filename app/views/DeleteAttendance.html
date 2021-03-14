@@ -1,0 +1,96 @@
+<section class="content-header">
+    <h1>
+        Manage Attendance
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <ui-select class="text-properties" ng-model="selected.user" ng-required="true" ng-change="userSelected(selected.user)">
+                                <ui-select-match placeholder="Choose a Teacher">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="user in users | filter: $select.search">
+                                    <div ng-bind-html="user.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <ui-select class="text-properties" ng-model="selected.subject" ng-required="true" ng-change="subjectSelected(selected.subject)">
+                                <ui-select-match placeholder="Choose a {{keywords.SubjectKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="subject in subjects | filter: $select.search">
+                                    <div ng-bind-html="subject.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <ui-select class="text-properties" ng-model="selected.class" ng-required="true">
+                                <ui-select-match placeholder="Choose a {{keywords.ClassKeyword}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="class in classes | filter: $select.search">
+                                    <div ng-bind-html="class.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input date-range-picker class="form-control date-picker" type="text" ng-model="selected.DateRange" placeholder="Select Date Range" options="options" style="margin-bottom: 10px;" />
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" ng-click="getAttendance()">
+                            Check Attendance
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2" style="padding-right:0px">
+            <table class="table table-bordered edit-tables" ng-show="Students.length > 0" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="student in Students">
+                        <td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 200px;">
+                            {{student.Name}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-10" style="padding-left:0px; overflow:auto">
+            <table class="table table-bordered edit-tables" ng-show="Students.length > 0" style="width:auto">
+                <thead>
+                    <tr>
+                        <th ng-repeat="dat in uniqueDates" style="min-width: 120px;">
+                            {{dat | date:'dd/MMM/yyyy'}}
+                            <a href ng-click="deleteDaysAttendance(dat)">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="student in Students">
+                        <td ng-repeat="att in attendance" ng-if="att.StudentId == student.Id">
+                            <label style="margin:0px;">
+                                <input type="checkbox" ng-model="att.IsPresent" ng-checked="att.IsPresent == 'true'" ng-true-value="'true'" ng-false-value="'false'" style="margin:0px;" ng-change="updateAttendance(att)"> 
+                                <span ng-if="att.IsPresent == 'true'" class="google-green">Present</span>
+                                <span ng-if="att.IsPresent == 'false'" class="google-red">Absent</span>
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

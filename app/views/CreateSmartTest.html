@@ -1,0 +1,114 @@
+<section class="content-header">
+    <h1>
+        Create Smart Test
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="form-group">
+        <input type="text" class="form-control" ng-model="newSmartTest.Name" placeholder="Quiz Name">
+    </div>
+    <div class="form-group">
+        <textarea class="form-control" rows="5" placeholder="Instructions" ng-model="newSmartTest.Instructions"></textarea>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newSmartTest.EnableTimeConstraint">
+            Enable time constraint
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-true-value="1" ng-false-value="2" ng-model="newSmartTest.TestType">
+            Chapterwise Test
+        </label>
+        <label>
+            <input type="checkbox" ng-true-value="2" ng-false-value="2" ng-model="newSmartTest.TestType">
+            Academic Test
+        </label>
+        <label>
+            <input type="checkbox" ng-true-value="3" ng-false-value="2" ng-model="newSmartTest.TestType">
+            Practice Test
+        </label>
+        <label>
+            <input type="checkbox" ng-true-value="4" ng-false-value="2" ng-model="newSmartTest.TestType">
+            Skill based Test
+        </label>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newSmartTest.CourseId" ng-required="true" ng-change="courseSelected()">
+            <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                <div ng-bind-html="course.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newSmartTest.BranchId" ng-required="true" ng-change="branchSelected()">
+            <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                <div ng-bind-html="branch.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newSmartTest.SemesterId" ng-required="true" ng-change="semesterSelected()">
+            <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+            <ui-select-choices repeat="semester.Id as semester in semesters | filter: $select.search">
+                <div ng-bind-html="semester.SemesterNumber"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newSmartTest.SubjectId" ng-required="true" ng-change="subjectSelected()">
+            <ui-select-match placeholder="Choose a Subject">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="subject.Id as subject in subjects | filter: $select.search">
+                <div ng-bind-html="subject.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="newSmartTest.ChapterId" ng-required="true" ng-change="getAllQuestionsForChapter(newSmartTest.ChapterId)">
+            <ui-select-match placeholder="Choose a Chapter">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="chapter.Id as chapter in chapters | filter: $select.search">
+                <div ng-bind-html="chapter.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4" style="border-right:1px solid #222d32;max-height: 700px;overflow-y: scroll; margin-bottom: 20px;" ng-if="questions.length > 0">
+            <h3>All Questions({{questions.length}})</h3>
+            <input style="margin-bottom:15px;" type="text" class="form-control pull-right" placeholder="Search tags" ng-model="search">
+            <ol>
+                <li ng-repeat="que in questions | filter: search" style="margin:10px; cursor:pointer">
+                    <label>
+                        <input type="checkbox" ng-model="que.IsSelected" ng-change="questionSelected(que)">
+                        <span ng-if="que.QuestionText != null">{{que.QuestionText}}</span>
+                        <img ng-if="que.QuestionMediaURL != null" ng-src="{{trustURL(que.QuestionMediaURL)}}" alt="" style="width:90%;">
+                    </label>
+                    <div class="row" ng-if="que.Tags.length > 0">
+                        <div class="col-md-12">
+                            <b>Tags: {{que.Tags}}</b>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="col-md-8">
+            <h3>Selected Questions({{selectedQuestions.length}})</h3>
+            <ol>
+                <li ng-repeat="que in selectedQuestions" style="margin:10px; cursor:pointer">
+                    <label>
+                        <input type="checkbox" ng-model="que.IsSelected">
+                        <span ng-if="que.QuestionText != null">{{que.QuestionText}}</span>
+                        <img ng-if="que.QuestionMediaURL != null" ng-src="{{trustURL(que.QuestionMediaURL)}}" alt="" style="width:90%;">
+                    </label>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <button style="margin-top:20px;" class="btn btn-primary btn-block" ng-click="createSmartTest()">Create</button>
+
+</section>

@@ -1,0 +1,63 @@
+<section class="content-header">
+    <h1>
+        Assign Question Papers to Topics
+    </h1>
+</section>
+<section class="content" style="min-height: 945px;">
+    <div class="form-group">
+        <ui-select ng-model="selected.CourseId" ng-required="true" ng-change="courseSelected()">
+            <ui-select-match placeholder="Choose a Course">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="course.Id as course in courses | filter: $select.search">
+                <div ng-bind-html="course.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="selected.BranchId" ng-required="true" ng-change="branchSelected()">
+            <ui-select-match placeholder="Choose a Branch">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="branch.Id as branch in branches | filter: $select.search">
+                <div ng-bind-html="branch.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="selected.SemesterId" ng-required="true" ng-change="semesterSelected()">
+            <ui-select-match placeholder="Choose a Semester">{{$select.selected.SemesterNumber}}</ui-select-match>
+            <ui-select-choices repeat="semester.Id as semester in semesters | filter: $select.search">
+                <div ng-bind-html="semester.SemesterNumber"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="selected.SubjectId" ng-required="true" ng-change="subjectSelected()">
+            <ui-select-match placeholder="Choose a Subject">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="subject.Id as subject in subjects | filter: $select.search">
+                <div ng-bind-html="subject.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="selected.ChapterId" ng-required="true" ng-change="chapterSelected()">
+            <ui-select-match placeholder="Choose a Chapter">{{$select.selected.Name}}</ui-select-match>
+            <ui-select-choices repeat="chapter.Id as chapter in chapters | filter: $select.search">
+                <div ng-bind-html="chapter.Name"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+
+    <div class="row" ng-repeat="topic in topics" style="margin: 10px 0px;border-bottom: 1px solid;padding: 10px 0px;">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4" style="line-height:34px;">
+                    {{topic.Name}}
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" name="topic-video-url" placeholder="Paste URL here" ng-model="topic.QuestionsMediaURL">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary btn-block" ng-click="assignQPs()">Assign Question Papers</button>
+
+</section>
