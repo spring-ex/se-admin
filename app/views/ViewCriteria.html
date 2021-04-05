@@ -121,56 +121,9 @@
             <div class="row" style="margin-bottom:10px;">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6">
-                            <h6>Standard</h6>
-                            <label ng-repeat="std in standard" style="margin-right:15px;">
-                                <input  type="checkbox" ng-model="std.isSelected" ng-change="addToTags(std)"> {{std.Name}}
-                            </label>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Difficulty Level</h6>
-                            <label ng-repeat="dl in difficultyLevel" style="margin-right:15px;">
-                                <input  type="checkbox" ng-model="dl.isSelected" ng-change="addToTags(dl)"> {{dl.Name}}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6>Answer Length</h6>
-                            <label ng-repeat="al in answerLengths" style="margin-right:15px;">
-                                <input  type="checkbox" ng-model="al.isSelected" ng-change="addToTags(al)"> {{al.Name}}
-                            </label>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Answer Type</h6>
-                            <label ng-repeat="at in answerTypes" style="margin-right:15px;">
-                                <input  type="checkbox" ng-model="at.isSelected" ng-change="addToTags(at)"> {{at.Name}}
-                            </label>
-                        </div>
-                    </div>
-                    <h6>Maths Core</h6>
-                    <label ng-repeat="mc in mathsCore" style="margin-right:15px;">
-                        <input  type="checkbox" ng-model="mc.isSelected" ng-change="addToTags(mc)"> {{mc.Name}}
-                    </label>
-                    <h6>Science Core</h6>
-                    <label ng-repeat="sc in scienceCore" style="margin-right:15px;">
-                        <input  type="checkbox" ng-model="sc.isSelected" ng-change="addToTags(sc)"> {{sc.Name}}
-                    </label>
-                    <h6>Blooms Taxonomy</h6>
-                    <label ng-repeat="btm in btms" style="margin-right:15px;">
-                        <input  type="checkbox" ng-model="btm.isSelected" ng-change="addToTags(btm)"> {{btm.Name}}
-                    </label>
-                    <h6>Others</h6>
-                    <label ng-repeat="other in others" style="margin-right:15px;">
-                        <input  type="checkbox" ng-model="other.isSelected" ng-change="addToTags(other)"> {{other.Name}}
-                    </label>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <textarea class="form-control" cols="30" rows="2" ng-model="selected.tagsToShow"></textarea>
-                        </div>
                         <div class="col-md-4">
                             <button class="btn btn-primary" ng-click="editCriteria();">
-                                Update Tags
+                                Update
                             </button>
                         </div>
                     </div>

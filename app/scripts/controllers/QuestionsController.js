@@ -245,8 +245,8 @@ angular.module('smartAdminApp')
 
         $scope.openQuestionUploader = function() {
             cloudinary.openUploadWidget({
-                cloud_name: 'studentphase-findinbox',
-                upload_preset: 'studentphase-findinbox'
+                cloud_name: 'dzerq05zm',
+                upload_preset: 'findinbox'
             }, function(error, result) {
                 $scope.newQuestion.QuestionMediaURL = 'http://res.cloudinary.com/demo/image/fetch/f_auto,q_auto/' + result[0].secure_url;
                 $scope.newQuestion.QuestionPublicId = result[0].public_id;

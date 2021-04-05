@@ -144,12 +144,6 @@
                         <span>Subjects</span>
                     </a>
                 </li>
-                <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
-                    <a href="#!/TestCategory ">
-                        <i class="fa fa-list-ol "></i>
-                        <span>Test Category</span>
-                    </a>
-                </li>
             </ul>
         </li>
         <li ng-if="loggedInUser.Role=='SUPERADMIN' ">
@@ -264,12 +258,6 @@
                     <a href="#!/DeleteSmartTest ">
                         <i class="fa fa-list-ol "></i>
                         <span>Delete Quiz</span>
-                    </a>
-                </li>
-                <li ng-if="loggedInUser.Role=='SUPERADMIN' || loggedInUser.Role=='UPLOADER' ">
-                    <a href="#!/Searchword">
-                        <i class="fa fa-list-ol "></i>
-                        <span>Keywords</span>
                     </a>
                 </li>
             </ul>
